@@ -18,7 +18,7 @@ try {
 
 <template>
   <div>
-    {{ tasks.length }}
+    tasks count : {{ tasks.length }}
     <div v-for="task in tasks" :key="task.id">
       <div class="task">
         <h3>{{ task.title }}</h3>

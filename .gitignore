@@ -27,3 +27,19 @@ TODO.md
 
 .env
 .env/**
+
+# iOS
+ios/Pods/
+ios/Podfile.lock
+ios/build/
+ios/App.xcworkspace
+
+# Android
+android/.gradle/
+android/.idea/
+android/build/
+android/local.properties
+
+# Capacitor
+node_modules/
+dist/
