@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const api = axios.create({ baseURL: "http://localhost:4000/api" });
+// lambda api
+const api = axios.create({ baseURL: "https://fd26h64qda.execute-api.eu-west-2.amazonaws.com/api" });
+// const api = axios.create({ baseURL: "http://localhost:4000/api" });
 
 export const getAllTasks = async () => {
   try {
