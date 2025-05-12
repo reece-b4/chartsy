@@ -9,7 +9,7 @@ export const getAllTasks = async () => {
     const tasks = await api.get("tasks");
     console.log("FE tasks: ", tasks);
     return tasks.data.tasks;
-  } catch (err) {
+  } catch (err: Error) {
     console.log(err.response, "error");
   }
 };
