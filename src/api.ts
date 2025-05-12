@@ -14,14 +14,13 @@ export const getAllTasks = async () => {
   }
 };
 
-// export function patchCountByImg(image) {
-//   const body = { img: image };
-//   return api
-//     .patch("/tkr", body)
-//     .then(({ data }) => {
-//       console.log(data);
-//     })
-//     .catch((err) => {
-//       console.log(err.response, "error");
-//     });
-// }
+export const postTask = async (task) => {
+  try {
+    
+    const newTask = await api.post("task", task);
+    console.log("FE newTask: ", newTask);
+    return newTask.data.task;
+  } catch (err) {
+    console.log(err.response, "error");
+  }
+};
