@@ -1,0 +1,8 @@
+node_modules
+dist
+public
+ios
+android
+.vscode
+.vite
+src/chartsyBE-types # symlinked shared types from backend

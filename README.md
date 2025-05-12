@@ -10,3 +10,7 @@ New-Item -ItemType SymbolicLink -Path <link-name> -Target <target>
 or just create
 
 do not edit created chartsyBE-types in root of FE dir. Fe will auto update according to BE type changes
+
+and same for 
+ln -s ../chartsyBE/.prettierrc .prettierrc
+ln -s ../chartsyBE/.prettierignore .prettierignore

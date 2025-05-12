@@ -44,5 +44,7 @@ android/local.properties
 node_modules/
 dist/
 
-#symbolic linked types from BE
+#symbolic linked content from BE
 src/chartsyBE-types
+.prettierignore
+.prettierrc
