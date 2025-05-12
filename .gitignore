@@ -43,3 +43,6 @@ android/local.properties
 # Capacitor
 node_modules/
 dist/
+
+#symbolic linked types from BE
+src/chartsyBE-types
