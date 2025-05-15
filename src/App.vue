@@ -66,6 +66,7 @@ const postTaskItem = async () => {
 
 <template>
   <div v-if="info">
+  JENKINS TEST
     <div v-if="info.platform === 'ios'">iPhone/iPad-specific UI</div>
     <div v-if="info.platform === 'mac'">macOS-specific UI</div>
     <div class="p-4">
