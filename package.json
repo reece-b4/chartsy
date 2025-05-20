@@ -9,9 +9,7 @@
     "preview": "vite preview",
     "ios:open": "npx cap open ios",
     "ios:sync": "npm run build && npx cap sync ios",
-    "jenkins:start": "bash scripts/start-jenkins.sh",
-    "jenkins:ngrok": "bash scripts/start-ngrok.sh",
-    "jenkins:stop": "docker stop jenkins && docker rm jenkins"
+    "jenkins:start": "bash scripts/update-ngrok-webhook.sh"
   },
   "dependencies": {
     "@capacitor/android": "^7.2.0",

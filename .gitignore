@@ -28,6 +28,8 @@ TODO.md
 .env
 .env/**
 
+scripts
+
 # iOS
 ios/Pods/
 ios/Podfile.lock

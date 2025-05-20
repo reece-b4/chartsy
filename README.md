@@ -14,3 +14,12 @@ do not edit created chartsyBE-types in root of FE dir. Fe will auto update accor
 and same for 
 ln -s ../chartsyBE/.prettierrc .prettierrc
 ln -s ../chartsyBE/.prettierignore .prettierignore
+
+
+
+
+
+jenkins:
+docker needs to be running for jenkins to deploy
+run jenkins docker image and configure via jenkins dashboard linked to that instance! ensure it is not using your local instance! (if intended)
+have gone with using jenkins local version not docker jenkins image
