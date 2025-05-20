@@ -27,14 +27,13 @@ pipeline {
     // The name of the S3 bucket where the frontend will be deployed
     S3_BUCKET = 'chartsy-fe'
 
-    // Your CloudFront distribution ID (for invalidation after deploy)
-    CLOUDFRONT_DISTRIBUTION_ID = 'XXXXXXXXXXXXXX'
 
     // Optionally set NODE_ENV
     NODE_ENV = 'production'
     //credentials
     AWS_ACCESS_KEY_ID     = credentials('aws-access-key-id')
     AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
+    // Your CloudFront distribution ID (for invalidation after deploy)
     CLOUDFRONT_DISTRIBUTION_ID = credentials('CLOUDFRONT_DISTRIBUTION_ID')
     GITHUB_PAT = credentials('github-pat')
   }
