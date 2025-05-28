@@ -32,3 +32,8 @@ using brew to run start jenkins and is working now
 
 reverted to npm as using jenkins/docker pipeline, docker will need to have pnpm installed globally which comes with more issues, like permissions to mkdir in to not writeable dirs
 best to use same package manager for local and deployed code to prevent potential errors caused by differences defeating the purpose of using docker
+
+after implementing testing via vitest
+once jenkins works via build 
+go back to scripts and see if all that is still needed
+test pipeline with git push to main

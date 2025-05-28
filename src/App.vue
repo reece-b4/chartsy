@@ -1,5 +1,4 @@
 <script setup>
-import HelloWorld from "./components/HelloWorld.vue";
 
 import { onMounted, ref } from "vue";
 import { getAllTasks } from "./api";
@@ -70,7 +69,7 @@ const postTaskItem = async () => {
     <div v-if="info.platform === 'ios'">iPhone/iPad-specific UI</div>
     <div v-if="info.platform === 'mac'">macOS-specific UI</div>
     <div class="p-4">
-      <button @click="shareFile" class="mr-2">Write tasksto File</button>
+      <button @click="shareFile" class="mr-2">Write tasks to file</button>
       <button @click="readFile">Read tasks File</button>
       <button @click="postTaskItem">post dummy task</button>
       <p class="mt-4"><strong>Read content:</strong> {{ fileContent }}</p>

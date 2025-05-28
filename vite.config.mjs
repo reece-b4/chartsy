@@ -1,7 +1,12 @@
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
+// vite.config.mjs
+import vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vite'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [vue()],
-});
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    includeSource: ['src/**/*.{ts,vue}'],
+  }
+})
