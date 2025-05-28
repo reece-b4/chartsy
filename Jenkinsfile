@@ -49,7 +49,7 @@ pipeline {
       }
       steps {
         sh 'rm -rf node_modules'
-        sh 'npm ci --omit=peer,optional'
+        sh 'npm ci --omit=optional'
         sh 'npm ci --include=dev'
         sh 'node_modules/.bin/vite build'
       }
