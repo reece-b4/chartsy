@@ -3,6 +3,7 @@
 // The pipeline consists of four stages: Install, Build, Deploy to S3, and Invalidate CloudFront.
 // It uses AWS CLI to sync the build artifacts to an S3 bucket and invalidate the CloudFront distribution.
 // The AWS credentials are stored in Jenkins credentials and accessed using the 'credentials' function.
+// BELOW IS STILL CORRECT ???????
 // The S3 bucket name and CloudFront distribution ID are defined as environment variables.
 // The pipeline is designed to be run in a Jenkins environment with the necessary plugins installed.
 // Jenkinsfile is written in Groovy scripting language.
@@ -34,7 +35,7 @@ pipeline {
     AWS_ACCESS_KEY_ID     = credentials('aws-access-key-id')
     AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
     // Your CloudFront distribution ID (for invalidation after deploy)
-    CLOUDFRONT_DISTRIBUTION_ID = credentials('CLOUDFRONT_DISTRIBUTION_ID')
+    CLOUDFRONT_DISTRIBUTION_ID = credentials('cloudfront-distribution-id')
     GITHUB_PAT = credentials('github-pat')
   }
 

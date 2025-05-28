@@ -20,6 +20,12 @@ ln -s ../chartsyBE/.prettierignore .prettierignore
 
 
 jenkins:
+starting jenkins with brew does not inherit shells environment so will not be able to use docker commands
 docker needs to be running for jenkins to deploy
 run jenkins docker image and configure via jenkins dashboard linked to that instance! ensure it is not using your local instance! (if intended)
 have gone with using jenkins local version not docker jenkins image
+jenkins in docker also doesn't have access to docker commands
+run rankins using .war package?
+fix for error was:
+https://medium.com/@bectorhimanshu/fix-for-the-error-docker-command-not-found-when-building-docker-image-using-jenkins-pipeline-on-db1bc5fa7976
+using brew to run start jenkins and is working now
