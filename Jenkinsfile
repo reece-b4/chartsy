@@ -43,7 +43,8 @@ pipeline {
     stage('Install & Build') {
       agent {
         docker {
-          image 'node:20-alpine'
+          image 'node:20-alpine',
+          args '-u node -e NPM_CONFIG_CACHE=/home/node/.npm'
         }
       }
       steps {
