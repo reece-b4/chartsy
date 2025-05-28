@@ -29,3 +29,6 @@ run rankins using .war package?
 fix for error was:
 https://medium.com/@bectorhimanshu/fix-for-the-error-docker-command-not-found-when-building-docker-image-using-jenkins-pipeline-on-db1bc5fa7976
 using brew to run start jenkins and is working now
+
+reverted to npm as using jenkins/docker pipeline, docker will need to have pnpm installed globally which comes with more issues, like permissions to mkdir in to not writeable dirs
+best to use same package manager for local and deployed code to prevent potential errors caused by differences defeating the purpose of using docker

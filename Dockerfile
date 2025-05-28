@@ -7,7 +7,6 @@ WORKDIR /app
 # copy all files from the current directory to the working directory in the container
 # this includes package.json and package-lock.json
 COPY . .
-RUN npm install -g pnpm
 RUN npm install
 RUN npm run build
 

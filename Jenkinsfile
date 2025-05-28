@@ -44,8 +44,8 @@ pipeline {
     // Install Node dependencies from lockfile
     stage('Install dependencies') {
       steps {
-        // 'pnpm ci' ensures clean install from package-lock or ppnpm-lock
-        sh 'pnpm ci'
+        // 'npm ci' ensures clean install from package-lock or npm-lock
+        sh 'npm ci'
       }
     }
 
@@ -53,7 +53,7 @@ pipeline {
     stage('Run tests') {
       steps {
         // Replace with your testing command, e.g., 'vitest run' or 'jest'
-        sh 'pnpm run test'
+        sh 'npm run test'
       }
     }
 
@@ -61,7 +61,7 @@ pipeline {
     stage('Build app') {
       steps {
         // Compiles the frontend into static files inside 'dist/'
-        sh 'pnpm run build'
+        sh 'npm run build'
       }
     }
 
