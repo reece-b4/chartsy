@@ -7,14 +7,10 @@ FROM node:20-alpine
 USER node
 
 #set working directory in the container
-WORKDIR /app
+WORKDIR /home/node/app
 # copy all files from the current directory to the working directory in the container
 # this includes package.json and package-lock.json
 # Set ownership to the 'node' user to avoid permission issues during install
 COPY --chown=node:node . .
-RUN npm install
-# RUN npm run build
-
-CMD ["npm", "run", "build"]
 
 # combined with .dockerignore file

@@ -1,5 +1,5 @@
 // This Jenkinsfile is for a Node.js application that builds and deploys to AWS S3 and invalidates CloudFront.
-// It uses a Docker agent with Node.js 18 and Alpine Linux.
+// It uses a Docker agent with Node.js 20 and Alpine Linux.
 // The pipeline consists of four stages: Install, Build, Deploy to S3, and Invalidate CloudFront.
 // It uses AWS CLI to sync the build artifacts to an S3 bucket and invalidate the CloudFront distribution.
 // The AWS credentials are stored in Jenkins credentials and accessed using the 'credentials' function.
@@ -18,7 +18,7 @@ pipeline {
   // You could also write:
   // agent { docker { image 'node:18' } }
   // OR to build using a Dockerfile in repo:
-  agent { dockerfile true }
+  agent none
 
   // -------- ENVIRONMENT VARIABLES --------
   environment {
@@ -27,7 +27,6 @@ pipeline {
 
     // The name of the S3 bucket where the frontend will be deployed
     S3_BUCKET = 'chartsy-fe'
-
 
     // Optionally set NODE_ENV
     NODE_ENV = 'production'
@@ -41,11 +40,15 @@ pipeline {
 
   // -------- STAGES OF THE PIPELINE --------
   stages {
-    // Install Node dependencies from lockfile
-    stage('Install dependencies') {
+    stage('Install & Build') {
+      agent {
+        docker {
+          image 'node:20-alpine'
+        }
+      }
       steps {
-        // 'npm ci' ensures clean install from package-lock or npm-lock
         sh 'npm ci'
+        sh 'npm run build'
       }
     }
 
@@ -58,12 +61,12 @@ pipeline {
     }
 
     // Build the Vue/Vite project for production
-    stage('Build app') {
-      steps {
-        // Compiles the frontend into static files inside 'dist/'
-        sh 'npm run build'
-      }
-    }
+    // stage('Build app') {
+    //   steps {
+    //     // Compiles the frontend into static files inside 'dist/'
+    //     sh 'npm run build'
+    //   }
+    // }
 
     // Deploy to S3 bucket
     stage('Deploy to S3') {
