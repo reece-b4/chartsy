@@ -47,11 +47,11 @@ pipeline {
           args '-u node -e NPM_CONFIG_CACHE=/home/node/.npm'
         }
       }
-      steps {
-        sh 'rm -rf node_modules'
-        sh 'npm ci'
-        sh 'npx vite build'
-      }
+  steps {
+    sh 'rm -rf node_modules'
+    sh 'npm ci'
+    sh 'node_modules/.bin/vite build'
+  }
     }
 
     // Run unit tests
