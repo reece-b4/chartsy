@@ -47,15 +47,21 @@ pipeline {
           args '-u node -e NPM_CONFIG_CACHE=/home/node/.npm'
         }
       }
-  steps {
-    sh 'rm -rf node_modules'
-    sh 'npm ci'
-    sh 'node_modules/.bin/vite build'
-  }
+      steps {
+        sh 'rm -rf node_modules'
+        sh 'npm ci'
+        sh 'node_modules/.bin/vite build'
+      }
     }
 
     // Run unit tests
     stage('Run tests') {
+        agent {
+        docker {
+          image 'node:20-alpine'
+          args '-u node -e NPM_CONFIG_CACHE=/home/node/.npm'
+        }
+        }
       steps {
         // Replace with your testing command, e.g., 'vitest run' or 'jest'
         sh 'npm run test'
@@ -72,6 +78,12 @@ pipeline {
 
     // Deploy to S3 bucket
     stage('Deploy to S3') {
+        agent {
+        docker {
+          image 'node:20-alpine'
+          args '-u node -e NPM_CONFIG_CACHE=/home/node/.npm'
+        }
+        }
       steps {
         // Syncs 'dist/' folder to your S3 bucket
         // '--delete' removes files on S3 that don't exist locally
@@ -85,6 +97,12 @@ pipeline {
     // Invalidate CloudFront cache so new build is served
     // CloudFront caches heavily, so this is important for users to see updated content
     stage('Invalidate CloudFront') {
+        agent {
+        docker {
+          image 'node:20-alpine'
+          args '-u node -e NPM_CONFIG_CACHE=/home/node/.npm'
+        }
+        }
       steps {
         // Sends a request to invalidate CloudFront's cache of static files
         // Ensures updated files are served to end users
