@@ -63,6 +63,9 @@ pipeline {
           args '-u node -e NPM_CONFIG_CACHE=/home/node/.npm'
         }
         }
+          environment {
+        NODE_ENV = 'test' // or unset NODE_ENV completely
+          }
       steps {
         // Replace with your testing command, e.g., 'vitest run' or 'jest'
         sh 'npm run test'
