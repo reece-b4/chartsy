@@ -84,14 +84,23 @@ pipeline {
     stage('Deploy to S3') {
         agent {
         docker {
-          image 'amazon/aws-cli:2.15.52'
+          image 'node:20-alpine'
           args '-u node -e NPM_CONFIG_CACHE=/home/node/.npm'
         }
         }
       steps {
-        // Syncs 'dist/' folder to your S3 bucket
+        // 1: install python3 & pip, then install aws-cli v2
+
+        // 2: add the --user bin directory into PATH
+
+        // 3: Syncs 'dist/' folder to your S3 bucket
         // '--delete' removes files on S3 that don't exist locally
         sh '''
+          apk add --no-cache python3 py3-pip \
+          && pip3 install awscli --upgrade --user
+
+          export PATH="$HOME/.local/bin:$PATH"
+
           aws s3 sync dist/ s3://$S3_BUCKET --delete \
             --region $AWS_REGION
         '''
@@ -103,7 +112,7 @@ pipeline {
     stage('Invalidate CloudFront') {
         agent {
         docker {
-          image 'amazon/aws-cli:2.15.52'
+          image 'node:20-alpine'
           args '-u node -e NPM_CONFIG_CACHE=/home/node/.npm'
         }
         }
