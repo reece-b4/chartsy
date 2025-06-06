@@ -84,7 +84,7 @@ pipeline {
     stage('Deploy to S3') {
         agent {
         docker {
-          image 'node:20-alpine'
+          image 'amazon/aws-cli:2.15.52'
           args '-u node -e NPM_CONFIG_CACHE=/home/node/.npm'
         }
         }
@@ -103,7 +103,7 @@ pipeline {
     stage('Invalidate CloudFront') {
         agent {
         docker {
-          image 'node:20-alpine'
+          image 'amazon/aws-cli:2.15.52'
           args '-u node -e NPM_CONFIG_CACHE=/home/node/.npm'
         }
         }
