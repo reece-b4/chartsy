@@ -85,7 +85,7 @@ pipeline {
         agent {
         docker {
           image 'node:20-alpine'
-          args '-e NPM_CONFIG_CACHE=/home/node/.npm'
+          args '-u root -e NPM_CONFIG_CACHE=/home/node/.npm'
         }
         }
       steps {
@@ -96,6 +96,8 @@ pipeline {
         // 3: Syncs 'dist/' folder to your S3 bucket
         // '--delete' removes files on S3 that don't exist locally
         sh '''
+          whoami && id
+
           apk add --no-cache python3 py3-pip \
           && pip3 install awscli --upgrade --user
 
@@ -103,29 +105,33 @@ pipeline {
 
           aws s3 sync dist/ s3://$S3_BUCKET --delete \
             --region $AWS_REGION
+
+          aws cloudfront create-invalidation \
+          --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
+          --paths "/*"
         '''
       }
     }
 
     // Invalidate CloudFront cache so new build is served
     // CloudFront caches heavily, so this is important for users to see updated content
-    stage('Invalidate CloudFront') {
-        agent {
-        docker {
-          image 'node:20-alpine'
-          args '-e NPM_CONFIG_CACHE=/home/node/.npm'
-        }
-        }
-      steps {
-        // Sends a request to invalidate CloudFront's cache of static files
-        // Ensures updated files are served to end users
-        sh '''
-          aws cloudfront create-invalidation \
-            --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
-            --paths "/*"
-        '''
-      }
-    }
+    // stage('Invalidate CloudFront') {
+    //     agent {
+    //     docker {
+    //       image 'node:20-alpine'
+    //       args '-e NPM_CONFIG_CACHE=/home/node/.npm'
+    //     }
+    //     }
+    //   steps {
+    //     // Sends a request to invalidate CloudFront's cache of static files
+    //     // Ensures updated files are served to end users
+    //     sh '''
+    //       aws cloudfront create-invalidation \
+    //         --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
+    //         --paths "/*"
+    //     '''
+    //   }
+    // }
   }
 
   // -------- OPTIONAL POST STEPS --------
