@@ -98,10 +98,8 @@ pipeline {
         sh '''
           whoami && id
 
-          apk add --no-cache python3 py3-pip \
-          && pip3 install awscli --upgrade --user
-
-          export PATH="$HOME/.local/bin:$PATH"
+         apk update \
+        && apk add --no-cache python3 py3-pip aws-cli
 
           aws s3 sync dist/ s3://$S3_BUCKET --delete \
             --region $AWS_REGION
