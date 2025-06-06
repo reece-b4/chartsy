@@ -47,6 +47,5 @@ node_modules/
 dist/
 
 #symbolic linked content from BE
-src/chartsyBE-types
 .prettierignore
 .prettierrc

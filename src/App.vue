@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue";
 import { getAllTasks, postTask } from "./api";
 import { Device } from "@capacitor/device";
 import { Share } from "@capacitor/share";
-import { Task, Tasks } from "@/chartsyBE-types/index";
+import { Task, Tasks } from "chartsy-types";
 
 const tasks = ref < Tasks > [];
 const filename = "tasks.txt";

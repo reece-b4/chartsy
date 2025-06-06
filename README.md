@@ -4,6 +4,8 @@ ln -s <path to BE types dir from DESTINATION path> <user created destination pat
 eg:
 ln -s ../../chartsyBE/src/types src/chartsyBE-types
 
+DO NOT USE SYMLINK IF USING cI/CD PIPELINE AS IT WILL NOT RESOLVE PATH TO LINKED FILE/S
+
 on windows:
 New-Item -ItemType SymbolicLink -Path <link-name> -Target <target>
 

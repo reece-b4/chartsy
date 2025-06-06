@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Task } from "@/chartsyBE-types/";
+import { Task } from "chartsy-types";
 
 // lambda api
 const api = axios.create({
