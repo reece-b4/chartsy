@@ -1,12 +1,11 @@
 <script setup>
-
 import { onMounted, ref } from "vue";
-import { getAllTasks } from "./api";
+import { getAllTasks, postTask } from "./api";
 import { Device } from "@capacitor/device";
 import { Share } from "@capacitor/share";
-import { postTask } from "./api";
+import { Task, Tasks } from "@/chartsyBE-types/index";
 
-const tasks = ref([]);
+const tasks = ref < Tasks > [];
 const filename = "tasks.txt";
 const fileContent = ref("");
 const info = ref(null);
@@ -65,9 +64,10 @@ const postTaskItem = async () => {
 
 <template>
   <div v-if="info">
-  JENKINS TEST 6
+    JENKINS TEST 6
     <div v-if="info.platform === 'ios'">iPhone/iPad-specific UI</div>
     <div v-if="info.platform === 'mac'">macOS-specific UI</div>
+    <div v-if="info.platform === 'web'">web-specific UI</div>
     <div class="p-4">
       <button @click="shareFile" class="mr-2">Write tasks to file</button>
       <button @click="readFile">Read tasks File</button>
