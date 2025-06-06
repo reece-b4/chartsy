@@ -1,14 +1,13 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { getAllTasks, postTask } from "./api";
-import { Device } from "@capacitor/device";
+import { getAllTasks, postTask } from "@/api";
+import { Device, DeviceInfo } from "@capacitor/device";
 import { Share } from "@capacitor/share";
-import { Task, Tasks } from "chartsy-types";
+import type { Tasks, TaskInput } from "chartsy-types";
 
-const tasks = ref < Tasks > [];
-const filename = "tasks.txt";
+const tasks = ref<Tasks>([]);
 const fileContent = ref("");
-const info = ref(null);
+const info = ref<DeviceInfo | null>(null);
 
 onMounted(async () => {
   try {
@@ -18,7 +17,7 @@ onMounted(async () => {
     console.error("Error fetching tasks:", error);
   }
   info.value = await Device.getInfo();
-  console.log(info.platform);
+  console.log(info.value.platform);
 });
 
 const shareFile = async () => {
@@ -34,19 +33,43 @@ const shareFile = async () => {
   }
 };
 
+const readFile = async () => {
+    try {
+      const filePicker = document.createElement('input');
+      filePicker.type = 'file';
+      filePicker.accept = '.json,.txt,.log'; // or '*' for all types
+
+      filePicker.onchange = async () => {
+        const file = filePicker.files?.[0];
+        if (!file) return;
+
+        const text = await file.text();
+
+        try {
+         fileContent.value = JSON.parse(text);
+        } catch (err) {
+          alert("error reading file: " + err);
+         fileContent.value = text;
+        }
+      };
+
+      filePicker.click();
+    } catch (err) {
+      alert('Unable to open file: ' + (err as any)?.message || err);
+    }
+  }
+
 const counter = ref(0);
 
 const postTaskItem = async () => {
   try {
-    const task = {
+    const task: TaskInput = {
       title: "Task new",
       description: "new posted task" + counter.value,
       status: "complete",
       due: "2026-10-01T09:00:00.000Z",
       priority: "high",
       tags: ["pensions", "documentation"],
-      created_at: "2025-05-01T13:53:37.650Z",
-      updated_at: null,
     };
     counter.value++;
 
@@ -55,7 +78,7 @@ const postTaskItem = async () => {
 
     const updatedTasks = await getAllTasks();
     tasks.value = updatedTasks;
-  } catch (e) {
+  } catch (e: any) {
     console.error("Error posting task:", e);
     alert("Error posting task: " + (e?.message || e));
   }
@@ -66,7 +89,6 @@ const postTaskItem = async () => {
   <div v-if="info">
     JENKINS TEST 6
     <div v-if="info.platform === 'ios'">iPhone/iPad-specific UI</div>
-    <div v-if="info.platform === 'mac'">macOS-specific UI</div>
     <div v-if="info.platform === 'web'">web-specific UI</div>
     <div class="p-4">
       <button @click="shareFile" class="mr-2">Write tasks to file</button>

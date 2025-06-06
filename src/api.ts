@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Task } from "chartsy-types";
+import type { TaskInput } from "chartsy-types";
 
 // lambda api
 const api = axios.create({
@@ -21,7 +21,7 @@ export const getAllTasks = async () => {
   }
 };
 
-export const postTask = async (task: Task) => {
+export const postTask = async (task: TaskInput) => {
   try {
     const newTask = await api.post("task", task);
     console.log("FE newTask: ", newTask);
