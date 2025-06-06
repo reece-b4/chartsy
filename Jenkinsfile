@@ -85,7 +85,7 @@ pipeline {
         agent {
         docker {
           image 'node:20-alpine'
-          args '-u node -e NPM_CONFIG_CACHE=/home/node/.npm'
+          args '-e NPM_CONFIG_CACHE=/home/node/.npm'
         }
         }
       steps {
@@ -113,7 +113,7 @@ pipeline {
         agent {
         docker {
           image 'node:20-alpine'
-          args '-u node -e NPM_CONFIG_CACHE=/home/node/.npm'
+          args '-e NPM_CONFIG_CACHE=/home/node/.npm'
         }
         }
       steps {
