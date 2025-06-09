@@ -80,56 +80,95 @@ pipeline {
     //   }
     // }
 
-    // Deploy to S3 bucket
-    stage('Deploy to S3') {
-        agent {
-        docker {
-          image 'node:20-alpine'
-          args '-u root -e NPM_CONFIG_CACHE=/home/node/.npm'
-        }
-        }
-      steps {
-        // 1: install python3 & pip, then install aws-cli v2
-
-        // 2: add the --user bin directory into PATH
-
-        // 3: Syncs 'dist/' folder to your S3 bucket
-        // '--delete' removes files on S3 that don't exist locally
-        sh '''
-          whoami && id
-
-         apk update \
-        && apk add --no-cache python3 py3-pip aws-cli
-
-          aws s3 sync dist/ s3://$S3_BUCKET --delete \
-            --region $AWS_REGION
-
-          aws cloudfront create-invalidation \
-          --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
-          --paths "/*"
-        '''
-      }
+    stage('Deploy & Invalidate') {
+  agent {
+    docker {
+      image 'node:20-alpine'
+      args '-u root -e NPM_CONFIG_CACHE=/home/node/.npm'
     }
+  }
+  steps {
+    script {
+      sh '''
+        set -eux
 
-    // Invalidate CloudFront cache so new build is served
-    // CloudFront caches heavily, so this is important for users to see updated content
-    // stage('Invalidate CloudFront') {
-    //     agent {
-    //     docker {
-    //       image 'node:20-alpine'
-    //       args '-e NPM_CONFIG_CACHE=/home/node/.npm'
-    //     }
-    //     }
-    //   steps {
-    //     // Sends a request to invalidate CloudFront's cache of static files
-    //     // Ensures updated files are served to end users
-    //     sh '''
-    //       aws cloudfront create-invalidation \
-    //         --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
-    //         --paths "/*"
-    //     '''
-    //   }
-    // }
+        # Install AWS CLI from Alpine packages
+        apk update \
+          && apk add --no-cache python3 py3-pip aws-cli
+
+        # Sync built assets to S3 (delete removed files)
+        aws s3 sync dist/ s3://$S3_BUCKET --delete --region $AWS_REGION
+
+        # Create a CloudFront invalidation and wait until it's done
+        INV_ID=$(aws cloudfront create-invalidation \
+          --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
+          --paths '/*' \
+          --query Invalidation.Id --output text)
+
+        echo "Waiting for CloudFront invalidation $INV_ID to complete…"
+        aws cloudfront wait invalidation-completed \
+          --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
+          --id $INV_ID
+
+        echo "✅ Assets deployed and CDN cache cleared."
+      '''
+    }
+  }
+}
+
+//     // Deploy to S3 bucket
+//     stage('Deploy to S3') {
+//         agent {
+//         docker {
+//           image 'node:20-alpine'
+//           args '-u root -e NPM_CONFIG_CACHE=/home/node/.npm'
+//         }
+//         }
+//       steps {
+//         // TODO: update these comments as no longer accurate and combine below steps 
+//         // comments as this is now done within this block.
+// 
+//         // 1: install python3 & pip, then install aws-cli v2
+// 
+//         // 2: add the --user bin directory into PATH
+// 
+//         // 3: Syncs 'dist/' folder to your S3 bucket
+//         // '--delete' removes files on S3 that don't exist locally
+//         sh '''
+//           whoami && id
+// 
+//          apk update \
+//         && apk add --no-cache python3 py3-pip aws-cli
+// 
+//           aws s3 sync dist/ s3://$S3_BUCKET --delete \
+//             --region $AWS_REGION
+// 
+//           aws cloudfront create-invalidation \
+//           --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
+//           --paths "/*"
+//         '''
+//       }
+//     }
+
+  // Invalidate CloudFront cache so new build is served
+  // CloudFront caches heavily, so this is important for users to see updated content
+  // stage('Invalidate CloudFront') {
+  //     agent {
+  //     docker {
+  //       image 'node:20-alpine'
+  //       args '-e NPM_CONFIG_CACHE=/home/node/.npm'
+  //     }
+  //     }
+  //   steps {
+  //     // Sends a request to invalidate CloudFront's cache of static files
+  //     // Ensures updated files are served to end users
+  //     sh '''
+  //       aws cloudfront create-invalidation \
+  //         --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
+  //         --paths "/*"
+  //     '''
+  //   }
+  // }
   }
 
   // -------- OPTIONAL POST STEPS --------
