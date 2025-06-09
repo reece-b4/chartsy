@@ -96,13 +96,21 @@ pipeline {
         apk update \
           && apk add --no-cache python3 py3-pip aws-cli
 
-        # Sync built assets to S3 (delete removed files)
-        aws s3 sync dist/ s3://$S3_BUCKET --delete --region $AWS_REGION
+        # Upload all files EXCEPT index.html with long-term caching
+        aws s3 cp dist/ s3://$S3_BUCKET/ --recursive \
+          --exclude "index.html" \
+          --cache-control "max-age=31536000,immutable" \
+          --region $AWS_REGION
+
+        # Upload index.html separately with no caching
+        aws s3 cp dist/index.html s3://$S3_BUCKET/index.html \
+          --cache-control "no-cache" \
+          --region $AWS_REGION
 
         # Create a CloudFront invalidation and wait until it's done
         INV_ID=$(aws cloudfront create-invalidation \
           --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
-          --paths '/*' \
+          --paths '/index.html' \
           --query Invalidation.Id --output text)
 
         echo "Waiting for CloudFront invalidation $INV_ID to complete…"
@@ -115,6 +123,42 @@ pipeline {
     }
   }
 }
+
+//     stage('Deploy & Invalidate') {
+//   agent {
+//     docker {
+//       image 'node:20-alpine'
+//       args '-u root -e NPM_CONFIG_CACHE=/home/node/.npm'
+//     }
+//   }
+//   steps {
+//     script {
+//       sh '''
+//         set -eux
+// 
+//         # Install AWS CLI from Alpine packages
+//         apk update \
+//           && apk add --no-cache python3 py3-pip aws-cli
+// 
+//         # Sync built assets to S3 (delete removed files)
+//         aws s3 sync dist/ s3://$S3_BUCKET --delete --region $AWS_REGION
+// 
+//         # Create a CloudFront invalidation and wait until it's done
+//         INV_ID=$(aws cloudfront create-invalidation \
+//           --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
+//           --paths '/*' \
+//           --query Invalidation.Id --output text)
+// 
+//         echo "Waiting for CloudFront invalidation $INV_ID to complete…"
+//         aws cloudfront wait invalidation-completed \
+//           --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
+//           --id $INV_ID
+// 
+//         echo "✅ Assets deployed and CDN cache cleared."
+//       '''
+//     }
+//   }
+// }
 
 //     // Deploy to S3 bucket
 //     stage('Deploy to S3') {
