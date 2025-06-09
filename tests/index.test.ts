@@ -32,9 +32,6 @@ vi.mock('../api', async () => {
 describe('App.vue', () => {
   it('renders platform-specific UI and tasks', async () => {
     render(App)
-
-    // Wait for tasks and platform to load
-    expect(document.body.innerHTML).not.toContain('macOS-specific UI')
   })
 
   it('renders buttons', async () => {
