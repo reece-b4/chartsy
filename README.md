@@ -20,7 +20,7 @@ ln -s ../chartsyBE/.prettierignore .prettierignore
 !!now using custom npm package for types!!
 
 
-
+!! to deploy docker needs to be running and first run npm run jenkins:start at start of session/day to ensure jenkins and ngrok are running
 
 
 jenkins:
