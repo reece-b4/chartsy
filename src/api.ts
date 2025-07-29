@@ -10,7 +10,6 @@ const api = axios.create({
 export const getAllTasks = async () => {
   try {
     const tasks = await api.get("tasks");
-    console.log("FE tasks: ", tasks);
     return tasks.data.tasks;
   } catch (err: unknown) {
     if (axios.isAxiosError(err)) {
@@ -24,7 +23,6 @@ export const getAllTasks = async () => {
 export const postTask = async (task: TaskInput) => {
   try {
     const newTask = await api.post("task", task);
-    console.log("FE newTask: ", newTask);
     return newTask.data.task;
   } catch (err: unknown) {
     if (axios.isAxiosError(err)) {

@@ -12,12 +12,10 @@ const info = ref<DeviceInfo | null>(null);
 onMounted(async () => {
   try {
     tasks.value = await getAllTasks();
-    console.log(tasks);
   } catch (error) {
     console.error("Error fetching tasks:", error);
   }
   info.value = await Device.getInfo();
-  console.log(info.value.platform);
 });
 
 const shareFile = async () => {

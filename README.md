@@ -17,6 +17,8 @@ and same for
 ln -s ../chartsyBE/.prettierrc .prettierrc
 ln -s ../chartsyBE/.prettierignore .prettierignore
 
+!!now using custom npm package for types!!
+
 
 
 
