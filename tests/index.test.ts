@@ -1,8 +1,8 @@
 /// <reference types="vitest" />
-import { render, screen } from "@testing-library/vue";
+import { render, screen, waitFor } from "@testing-library/vue";
+import '@testing-library/jest-dom';
 import App from "../src/App.vue";
 import { vi } from "vitest";
-import { nextTick } from "vue";
 
 // Mock Device plugin
 vi.mock("@capacitor/device", () => ({
@@ -38,12 +38,14 @@ describe("App.vue", () => {
 
   it("renders buttons", async () => {
     render(App);
-    await nextTick();
-    const button = await screen.findByRole("button", {
-      name: /write tasks? to file/i,
+
+    await waitFor(async () => {
+      const button = await screen.findByRole("button", {
+        name: /write tasks? to file/i,
+      });
+      expect(button).toBeInTheDocument();
     });
 
-    expect(button).toBeTruthy();
     expect(screen.getByText("post dummy task")).not.toBeNull();
   });
 });
