@@ -41,3 +41,5 @@ after implementing testing via vitest
 once jenkins works via build 
 go back to scripts and see if all that is still needed
 test pipeline with git push to main
+
+start cicd processes with local script pointed to in package.json, github_pat needed in .env.CICD
