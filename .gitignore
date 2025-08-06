@@ -26,7 +26,7 @@ dist-ssr
 TODO.md
 
 .env
-.env/**
+.env.**
 
 scripts
 

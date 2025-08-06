@@ -9,8 +9,7 @@
     "preview": "vite preview",
     "ios:open": "npx cap open ios",
     "ios:sync": "npm run build && npx cap sync ios",
-    "CI/CD_processes:start": "bash scripts/update-ngrok-webhook.sh",
-    "CI/CD_processes_copy:start": "bash scripts/update-ngrok-webhook_copy.sh",
+    "CI/CD_processes:start": "bash ~/src/scripts/CICD_processes.sh chartsy",
     "test": "vitest --typecheck"
   },
   "dependencies": {
