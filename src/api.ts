@@ -3,7 +3,7 @@ import type { TaskInput } from "chartsy-types";
 
 // lambda api
 const api = axios.create({
-  baseURL: "https://fd26h64qda.execute-api.eu-west-2.amazonaws.com/api",
+  baseURL: "https://fd26h64qda.execute-api.eu-west-2.amazonaws.com/dev/api",
 });
 // const api = axios.create({ baseURL: "http://localhost:4000/api" });
 
