@@ -46,7 +46,7 @@ pipeline {
     stage('Install & Build') {
       agent {
         docker {
-          image 'node:20-alpine'
+          image 'node:20.19.4-alpine'
           args '-u node -e NPM_CONFIG_CACHE=/home/node/.npm'
         }
       }
@@ -62,7 +62,7 @@ pipeline {
     stage('Run tests') {
         agent {
         docker {
-          image 'node:20-alpine'
+          image 'node:20.19.4-alpine'
           args '-u node -e NPM_CONFIG_CACHE=/home/node/.npm'
         }
         }
@@ -80,7 +80,7 @@ pipeline {
     stage('Deploy & Invalidate') {
       agent {
         docker {
-          image 'node:20-alpine'
+          image 'node:20.19.4-alpine'
           args '-u root -e NPM_CONFIG_CACHE=/home/node/.npm'
         }
       }
