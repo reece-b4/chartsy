@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "NODE_ENV=production vite",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
@@ -35,7 +36,7 @@
     "@testing-library/jest-dom": "^6.6.4",
     "@vite-pwa/assets-generator": "^1.0.0",
     "@vitejs/plugin-vue": "^5.2.4",
-    "chartsy-types": "^1.0.0",
+    "chartsy-types": "^2.6.1",
     "typescript": "^5.8.3",
     "vite-plugin-pwa": "^1.0.3",
     "vue-tsc": "^2.2.10"

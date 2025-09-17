@@ -24,6 +24,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*", "src/**/*.d.ts", "src/**/*.vue", "tests"],
+  "include": ["src/**/*", "src/**/*.d.ts", "src/**/*.vue", "tests", "vite-env.d.ts"],
   "exclude": ["node_modules", "dist", "public", "scripts"]
 }

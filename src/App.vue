@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { getAllTasks, postTask } from "@/api";
+import { getAllCollections, 
+  // postCollections
+
+ } from "@/api";
 import { Device, DeviceInfo } from "@capacitor/device";
 import { Share } from "@capacitor/share";
-import type { Tasks, TaskInput } from "chartsy-types";
+import type { Collection, Collections } from "chartsy-types";
 
-const tasks = ref<Tasks>([]);
+const collections = ref<Collections>([]);
 const fileContent = ref("");
 const info = ref<DeviceInfo | null>(null);
 
 onMounted(async () => {
   try {
-    tasks.value = await getAllTasks();
+    collections.value = await getAllCollections();
   } catch (error) {
     console.error("Error fetching tasks:", error);
   }
@@ -22,7 +25,7 @@ const shareFile = async () => {
   try {
     await Share.share({
       title: "Tasks Note",
-      text: JSON.stringify(tasks.value, null, 2),
+      text: JSON.stringify(collections.value, null, 2),
       dialogTitle: "save your file",
     });
     alert("File written!");
@@ -91,16 +94,17 @@ const counter = ref(0);
     <div class="p-4">
       <button @click="shareFile" class="mr-2">Write tasks to file</button>
       <button @click="readFile">Read tasks File</button>
-      <!-- <button @click="postTaskItem">post dummy task</button>/ -->
+      <!-- <button @click="postTaskItem">post dummy task</button> -->
       <p class="mt-4"><strong>Read content:</strong> {{ fileContent }}</p>
     </div>
-    tasks count : {{ tasks.length }}
-    <div v-for="task in tasks" :key="task.id">
-      <div class="task">
+    tasks count : {{ collections.length }}
+    <div v-for="collection in collections" :key="collection.id">
+      {{ collection }}
+      <!-- <div class="task">
         <h3>{{ task.title }}</h3>
         <p>{{ task.description }}</p>
         <p>Status: {{ task.status }}</p>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

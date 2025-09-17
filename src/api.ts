@@ -1,16 +1,21 @@
 import axios from "axios";
-import type { TaskInput } from "chartsy-types";
+import type { Collection, Collections } from "chartsy-types";
 
-// lambda api
+let baseURL = "";
+if (import.meta.env.PROD===true) {
+  // lambda api
+  baseURL = "https://fd26h64qda.execute-api.eu-west-2.amazonaws.com/api"
+} else {
+  baseURL = "http://localhost:4000/api";
+}
 const api = axios.create({
-  baseURL: "https://fd26h64qda.execute-api.eu-west-2.amazonaws.com/api",
+  baseURL,
 });
-// const api = axios.create({ baseURL: "http://localhost:4000/api" });
 
-export const getAllTasks = async () => {
+export const getAllCollections = async () => {
   try {
-    const tasks = await api.get("tasks");
-    return tasks.data.tasks;
+    const collections = await api.get("collections");
+    return collections.data.collections;
   } catch (err: unknown) {
     if (axios.isAxiosError(err)) {
       console.log(err.response, "error");
@@ -20,10 +25,10 @@ export const getAllTasks = async () => {
   }
 };
 
-export const postTask = async (task: TaskInput) => {
+export const postCollection = async (collection: Collection) => {
   try {
-    const newTask = await api.post("task", task);
-    return newTask.data.task;
+    const newCollections = await api.post("collection", collection);
+    return newCollections.data.collection;
   } catch (err: unknown) {
     if (axios.isAxiosError(err)) {
       console.log(err.response, "error");
