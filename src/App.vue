@@ -88,17 +88,20 @@ const counter = ref(0);
 
 <template>
   <div v-if="info">
-    branch test
-    <div v-if="info.platform === 'ios'">iPhone/iPad-specific UI</div>
-    <div v-if="info.platform === 'web'">web-specific UI</div>
-    <div class="p-4">
+    <!-- branch test -->
+    <!-- <div v-if="info.platform === 'ios'">iPhone/iPad-specific UI</div> -->
+    <!-- <div v-if="info.platform === 'web'">web-specific UI</div> -->
+    <!-- <div class="p-4"> -->
       <!-- <button @click="shareFile" class="mr-2">Write tasks to file</button> -->
       <!-- <button @click="readFile">Read tasks File</button> -->
       <!-- <button @click="postTaskItem">post dummy task</button> -->
-      <p class="mt-4"><strong>Read content:</strong> {{ fileContent }}</p>
-    </div>
+      <!-- <p class="mt-4"><strong>Read content:</strong> {{ fileContent }}</p> -->
+    <!-- </div> -->
+       <h1 class="text-3xl font-bold underline bg-red-500">
+    Hello world!
+  </h1>
     collections count : {{ collections.length }}
-    <div v-for="collection in collections" :key="collection.id">
+    <div v-for="collection in collections" :key="collection.id" >
       {{ collection }}
       <!-- <div class="task">
         <h3>{{ task.title }}</h3>
@@ -110,7 +113,7 @@ const counter = ref(0);
 </template>
 
 <style scoped>
-.logo {
+/* .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
@@ -127,5 +130,5 @@ const counter = ref(0);
   width: 50rem;
   height: 10rem;
   border: solid 1px #000;
-}
+} */
 </style>
