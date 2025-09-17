@@ -52,6 +52,7 @@ pipeline {
       }
       steps {
         sh 'rm -rf node_modules'
+        // TODO: duplicate install (i assume dev takes precedence)
         sh 'npm ci --omit=optional'
         sh 'npm ci --include=dev'
         sh 'node_modules/.bin/vite build'
