@@ -59,28 +59,28 @@ const readFile = async () => {
 
 const counter = ref(0);
 
-const postTaskItem = async () => {
-  try {
-    const task: TaskInput = {
-      title: "Task new",
-      description: "new posted task" + counter.value,
-      status: "complete",
-      due: "2026-10-01T09:00:00.000Z",
-      priority: "high",
-      tags: ["pensions", "documentation"],
-    };
-    counter.value++;
-
-    await postTask(task);
-    alert("Task posted!");
-
-    const updatedTasks = await getAllTasks();
-    tasks.value = updatedTasks;
-  } catch (e: any) {
-    console.error("Error posting task:", e);
-    alert("Error posting task: " + (e?.message || e));
-  }
-};
+// const postTaskItem = async () => {
+//   try {
+//     const task: TaskInput = {
+//       title: "Task new",
+//       description: "new posted task" + counter.value,
+//       status: "complete",
+//       due: "2026-10-01T09:00:00.000Z",
+//       priority: "high",
+//       tags: ["pensions", "documentation"],
+//     };
+//     counter.value++;
+// 
+//     await postTask(task);
+//     alert("Task posted!");
+// 
+//     const updatedTasks = await getAllTasks();
+//     tasks.value = updatedTasks;
+//   } catch (e: any) {
+//     console.error("Error posting task:", e);
+//     alert("Error posting task: " + (e?.message || e));
+//   }
+// };
 </script>
 
 <template>
@@ -91,7 +91,7 @@ const postTaskItem = async () => {
     <div class="p-4">
       <button @click="shareFile" class="mr-2">Write tasks to file</button>
       <button @click="readFile">Read tasks File</button>
-      <button @click="postTaskItem">post dummy task</button>
+      <!-- <button @click="postTaskItem">post dummy task</button>/ -->
       <p class="mt-4"><strong>Read content:</strong> {{ fileContent }}</p>
     </div>
     tasks count : {{ tasks.length }}

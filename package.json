@@ -10,7 +10,8 @@
     "ios:open": "npx cap open ios",
     "ios:sync": "npm run build && npx cap sync ios",
     "CI/CD_processes:start": "bash ~/src/scripts/CICD_processes.sh chartsy",
-    "test": "vitest --typecheck"
+    "test": "vitest --typecheck",
+    "generate-pwa-assets": "pwa-assets-generator"
   },
   "dependencies": {
     "@capacitor/android": "^7.2.0",
@@ -32,9 +33,11 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.4",
+    "@vite-pwa/assets-generator": "^1.0.0",
     "@vitejs/plugin-vue": "^5.2.4",
     "chartsy-types": "^1.0.0",
     "typescript": "^5.8.3",
+    "vite-plugin-pwa": "^1.0.3",
     "vue-tsc": "^2.2.10"
   }
 }
