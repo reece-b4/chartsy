@@ -16,23 +16,23 @@ onMounted(async () => {
   try {
     collections.value = await getAllCollections();
   } catch (error) {
-    console.error("Error fetching tasks:", error);
+    console.error("Error fetching collections:", error);
   }
   info.value = await Device.getInfo();
 });
 
-const shareFile = async () => {
-  try {
-    await Share.share({
-      title: "Tasks Note",
-      text: JSON.stringify(collections.value, null, 2),
-      dialogTitle: "save your file",
-    });
-    alert("File written!");
-  } catch (e) {
-    alert("error sharing file: " + e);
-  }
-};
+// const shareFile = async () => {
+//   try {
+//     await Share.share({
+//       title: "Tasks Note",
+//       text: JSON.stringify(collections.value, null, 2),
+//       dialogTitle: "save your file",
+//     });
+//     alert("File written!");
+//   } catch (e) {
+//     alert("error sharing file: " + e);
+//   }
+// };
 
 const readFile = async () => {
     try {
@@ -92,12 +92,12 @@ const counter = ref(0);
     <div v-if="info.platform === 'ios'">iPhone/iPad-specific UI</div>
     <div v-if="info.platform === 'web'">web-specific UI</div>
     <div class="p-4">
-      <button @click="shareFile" class="mr-2">Write tasks to file</button>
-      <button @click="readFile">Read tasks File</button>
+      <!-- <button @click="shareFile" class="mr-2">Write tasks to file</button> -->
+      <!-- <button @click="readFile">Read tasks File</button> -->
       <!-- <button @click="postTaskItem">post dummy task</button> -->
       <p class="mt-4"><strong>Read content:</strong> {{ fileContent }}</p>
     </div>
-    tasks count : {{ collections.length }}
+    collections count : {{ collections.length }}
     <div v-for="collection in collections" :key="collection.id">
       {{ collection }}
       <!-- <div class="task">
@@ -123,7 +123,7 @@ const counter = ref(0);
   filter: drop-shadow(0 0 2em #42b883aa);
 }
 
-.task {
+.collection {
   width: 50rem;
   height: 10rem;
   border: solid 1px #000;
